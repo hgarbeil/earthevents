@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EarthEvents</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="frontpage">
+        <div class="sidebar">
+            <div class="eventtype">
+                <h3>Earthquake Parameters</h3>
+                <form id="myForm" class="form">
+                    <label for="magF">Minimum Magnitude (1-10):  </label>
+                    <input type="number" id="magField" name="magF" value="3">
+                    <label for="daysF">Past Number of Days : </label>
+                    <input type="number" id="daysField" name="daysF" value="7">
+                    <div></div>
+                    <input type="button" onclick="updateQuakes()" value="Update Quakes">
+                </form>
+            </div>
+            <div class="eventtype">
+                <h3>Volcano Parameters</h3>
+                <form id="volc_event_type">
+                  <div>
+                    <input type="checkbox" id="volc_all_cb" name="volc_all" checked />
+                    <label for="volc_cb_all">All</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" id="volc_green_cb" name="volc_green" />
+                    <label for="volc_green">Green</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" id="volc_yellow_cb" name="volc_yellow" />
+                    <label for="volc_yellow">Yellow</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" id="volc_red_cb" name="volc_red" />
+                    <label for="volc_red">Red</label>
+                  </div>
+                </form>
+              </div>
+              
+
+        </div>
+        <div class="main-content">
+
+        </div>
+    </div>
+    <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"></script>
+    <script src="https://volcanoes.usgs.gov/hans-public/api/volcano/getMonitoredVolcanoes"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="index.js"></script>
+    <script src="volcano.js"></script>
+    <script src="fire_perim.js"></script>
+    
+</body>
+</html>
