@@ -1,5 +1,5 @@
 
-const volc_all_cb = document.getElementById ('volc_all_cb');
+// const volc_all_cb = document.getElementById ('volc_all_cb');
 const volc_green_cb = document.getElementById('volc_green_cb') ;
 const volc_yellow_cb = document.getElementById('volc_yellow_cb') ;
 const volc_red_cb = document.getElementById('volc_red_cb') ;
@@ -57,7 +57,7 @@ function getFlags(){
     green_flag = volc_green_cb.checked ;
     yellow_flag = volc_yellow_cb.checked ;
     red_flag = volc_red_cb.checked ;
-    all_flag = volc_all_cb.checked ;
+    // all_flag = volc_all_cb.checked ;
 
 }
 
@@ -85,11 +85,11 @@ fetch ('https://volcanoes.usgs.gov/vsc/api/volcanoApi/vhpstatus').then(res=>res.
         for (var i in volcdata){
             let volc = volcdata[i];
             //console.log(volcdata[i]);
-            if (volcdata[i].alertLevel!='UNASSIGNED' && all_flag) {
-                markerOptions.icon= volcBlkIcon ;
-                marker = L.marker([volc.lat,volc.long],markerOptions);
-                addMarker(volc,marker);
-            }
+            // if (volcdata[i].alertLevel!='UNASSIGNED' && all_flag) {
+            //     markerOptions.icon= volcBlkIcon ;
+            //     marker = L.marker([volc.lat,volc.long],markerOptions);
+            //     addMarker(volc,marker);
+            // }
             if (volc.colorCode=='GREEN' && green_flag){
                     markerOptions.icon= volcGreenIcon ;
                     marker = L.marker([volc.lat,volc.long],markerOptions);

@@ -24,25 +24,34 @@
                 </form>
             </div>
             <div class="eventtype">
-                <h3>Volcano Parameters</h3>
+                <h3>Volcano Alert Level</h3>
                 <form id="volc_event_type">
-                  <div>
+                  <!-- <div>
                     <input type="checkbox" id="volc_all_cb" name="volc_all" checked />
                     <label for="volc_cb_all">All</label>
-                  </div>
+                  </div> -->
                   <div>
-                    <input type="checkbox" id="volc_green_cb" name="volc_green" />
+                    <input type="checkbox" id="volc_green_cb" name="volc_green" checked />
                     <label for="volc_green">Green</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="volc_yellow_cb" name="volc_yellow" />
+                    <input type="checkbox" id="volc_yellow_cb" name="volc_yellow" checked />
                     <label for="volc_yellow">Yellow</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="volc_red_cb" name="volc_red" />
+                    <input type="checkbox" id="volc_red_cb" name="volc_red" checked/>
                     <label for="volc_red">Red</label>
                   </div>
                 </form>
+              </div>
+              <div class="eventtype">
+                <h3>Current Wildfire Parameters</h3>
+                <form id="myForm1" class="form">
+                  <label for="minAcre">Minimum Acreage (0 - 100000):  </label>
+                  <input type="number" id="acreField" name="minAcre" value="1000">
+                  <div></div>
+                  <input type="button" onclick="updateFires()" value="Update Fires">
+              </form>
               </div>
               
 

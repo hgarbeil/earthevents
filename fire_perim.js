@@ -15,7 +15,7 @@ fetch (fireurl).then(res=>res.json())
                 
                  onEachFeature: function (f, l) {
                       l.bindPopup('<pre>'+f.properties.poly_IncidentName+'<br>'+
-                      f.properties.poly_GISAcres+' Acres<br>'+
+                      f.properties.attr_IncidentSize+' Acres<br>'+
                       f.properties.attr_FireBehaviorGeneral+'</pre>');
                     } 
                 
