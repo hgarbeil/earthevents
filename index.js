@@ -3,7 +3,7 @@ const mainEl = document.querySelector('.main-content') ;
 const magTF = document.getElementById('magField') ;
 const daysTF = document.getElementById('daysField') ;
 let map ;
-let minMag = 4 ;
+let minMag = 3 ;
 let nDays = 7 ;
 let starttime = new Date() ;
 let quakes = [] ;
@@ -53,17 +53,28 @@ function get_quakes(ndays,minmag) {
     fetch (quakeurl).then (res=>res.json()).then (qdata=>{
         console.log(qdata.features[0]);
         let nquakes = qdata.features.length ;
-        //console.log(marker.length);
+        
         for (marknum in marks) {
             map.removeLayer (marks[marknum]);
 
         }
         for (i=0; i<nquakes; i++){
+            let quakeColor = "#00AAFF" ;
             let quake = qdata.features[i] ;
-            marker = L.marker([quake.geometry.coordinates[1],quake.geometry.coordinates[0]]);
+
+            if (quake.properties.mag > 4 && quake.properties.mag<6) {
+                quakeColor = "#EEFF00" ;
+            }
+            if (quake.mag >= 6){
+                quakeColor = "FF0000" ;
+            }
+            marker = L.circleMarker([quake.geometry.coordinates[1],quake.geometry.coordinates[0]],{
+                radius:quake.properties.mag**2,
+                color:quakeColor,
+        });
             let qdate = new Date (quake.properties.time).toISOString() ;
             let qplace = quake.properties.place ;
-            marker.bindPopup ("<b>"+quake.properties.mag+"</b><br>"+qdate+"<br>"+qplace);
+            marker.bindPopup ("<b>Magnitude : "+quake.properties.mag+"</b><br>"+qdate+"<br>"+qplace);
                 
             marks.push(marker);
             marker.addTo(map) ;
@@ -76,7 +87,7 @@ function get_quakes(ndays,minmag) {
     
     }
 
-
+updateQuakes() ;
 get_quakes(nDays, minMag) ;
 
 
