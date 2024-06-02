@@ -48,7 +48,7 @@ function get_quakes(ndays,minmag) {
     let days = getdays(ndays) ;
     let day0 = days[0].toISOString().slice(0,10) ;
     let day1 = days[1].toISOString().slice(0,10) ;
-    quakeurl = `https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=${day0}%2000:00:00&endtime=${day1}%2023:59:59&maxlatitude=50&minlatitude=17.6&maxlongitude=-65&minlongitude=-158&minmagnitude=${minmag}&orderby=time`;
+    quakeurl = `https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=${day0}%2000:00:00&endtime=${day1}%2023:59:59&maxlatitude=66&minlatitude=17.6&maxlongitude=-65&minlongitude=-158&minmagnitude=${minmag}&orderby=time`;
 
     fetch (quakeurl).then (res=>res.json()).then (qdata=>{
         console.log(qdata.features[0]);
@@ -63,7 +63,7 @@ function get_quakes(ndays,minmag) {
             let quake = qdata.features[i] ;
 
             if (quake.properties.mag > 4 && quake.properties.mag<6) {
-                quakeColor = "#EEFF00" ;
+                quakeColor = "#CCCC00" ;
             }
             if (quake.mag >= 6){
                 quakeColor = "FF0000" ;
