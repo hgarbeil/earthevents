@@ -2,9 +2,23 @@ const acreTF = document.getElementById ("acreField") ;
 let fireurl = 'https://services3.arcgis.com/T4QMspbfLg3qTGWY/arcgis/rest/services/WFIGS_Interagency_Perimeters_Current/FeatureServer/jobs/a9af9310-bf0a-41eb-9e7a-9db590421661?f=json';
 
 
+function clearFires(){
+    for (marknum in firemarks) {
+        map.removeLayer (firemarks[marknum]);
+
+    }
+    firemarks=[] ;
+}
+
+function updateFires(){
+    clearFires() ;
+    loadFires() ;
+}
+
 function loadFires(){
 let minAcreage = acreTF.value ;
 console.log("min acreage is "+ minAcreage);
+clearFires() ;
 fetch (fireurl).then(res=>res.json())
     
     .then (firedata=>{
@@ -20,7 +34,7 @@ fetch (fireurl).then(res=>res.json())
                 continue ;
             }
             console.log(f);
-            L.geoJSON(f, {
+            let mymark = L.geoJSON(f, {
                 style: {color:"#ff0000"},
                 
                  onEachFeature: function (f, l) {
@@ -38,7 +52,9 @@ fetch (fireurl).then(res=>res.json())
                 //         case 'Democrat':   return {color: "#0000ff"};
                 //     }
                 // }
-            }).addTo(map);
+            })
+            mymark.addTo(map);
+            firemarks.push(mymark) ;
             }
         });
         

@@ -2,6 +2,9 @@ let quakeurl = "https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?startti
 const mainEl = document.querySelector('.main-content') ;
 const magTF = document.getElementById('magField') ;
 const daysTF = document.getElementById('daysField') ;
+const quakes_cb = document.getElementById('quakes_cb');
+const fires_cb = document.getElementById('fires_cb');
+const volcs_cb = document.getElementById('volcs_cb');
 let map ;
 let minMag = 3 ;
 let nDays = 7 ;
@@ -9,6 +12,11 @@ let starttime = new Date() ;
 let quakes = [] ;
 let marker ;
 let marks =[] ;
+let volcmarks = [] ;
+let firemarks=[] ;
+let volc_show= true ;
+let quake_show=true ;
+let fire_show=true ;
 
 
 mainEl.innerHTML=`<div id="mapid" class="mapdiv"></div>`;
@@ -20,8 +28,14 @@ maxZoom: 20,
 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-//
-
+// check which events to show
+$( document ).ready(function(){
+    $("#event_show_cb").on("change", "input:checkbox", function(){
+        //$("#formname").submit();
+        console.log("event cb hit") ;
+        getEvents();
+    });
+});
 
 
 
@@ -42,6 +56,32 @@ function updateQuakes() {
     get_quakes(nDays,nMag) ;
 }
 
+function getEvents(){
+    volc_show=volcs_cb.checked;
+    fire_show=fires_cb.checked;
+    quake_show=quakes_cb.checked;
+
+    if (!volc_show){
+        clearVolcs() ;
+    } else {
+        loadVolcs() ;
+    }
+    if (!fire_show){
+        clearFires() ;
+    } else {
+        loadFires() ;
+    }
+
+}
+
+function clearQuakes(){
+    for (marknum in marks) {
+        map.removeLayer (marks[marknum]);
+
+    } 
+    marks=[] ;
+}
+
 
 function get_quakes(ndays,minmag) {
     
@@ -50,14 +90,13 @@ function get_quakes(ndays,minmag) {
     let day1 = days[1].toISOString().slice(0,10) ;
     quakeurl = `https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=${day0}%2000:00:00&endtime=${day1}%2023:59:59&maxlatitude=66&minlatitude=17.6&maxlongitude=-65&minlongitude=-158&minmagnitude=${minmag}&orderby=time`;
 
+    clearQuakes() ;
     fetch (quakeurl).then (res=>res.json()).then (qdata=>{
-        console.log(qdata.features[0]);
+        
+        //console.log(qdata.features[0]);
         let nquakes = qdata.features.length ;
         
-        for (marknum in marks) {
-            map.removeLayer (marks[marknum]);
-
-        }
+       
         for (i=0; i<nquakes; i++){
             let quakeColor = "#00AAFF" ;
             let quake = qdata.features[i] ;

@@ -7,7 +7,6 @@ let all_flag = false ;
 let green_flag = true ;
 let yellow_flag = false ;
 let red_flag = false ;
-let volcmarks = [] ;
 
 // monitored volcanoes
 // volcurl = 'https://volcanoes.usgs.gov/hans-public/api/volcano/getMonitoredVolcanoes';
@@ -20,6 +19,8 @@ $( document ).ready(function(){
         loadVolcs() ;
     });
 });
+
+
 
 let markerOptions = {
     title: "1",
@@ -71,14 +72,18 @@ function addMarker (volc, marker) {
 
 }
 
+function clearVolcs(){
+    for (marknum in volcmarks) {
+        map.removeLayer (volcmarks[marknum]);
 
+    }
+    volcmarks=[] ;
+}
 
 
 function loadVolcs (){
 console.log("And here too");
-for (marks in volcmarks) {
-    map.removeLayer(volcmarks[marks]);
-}
+clearVolcs() ;
 fetch ('https://volcanoes.usgs.gov/vsc/api/volcanoApi/vhpstatus').then(res=>res.json())
     
     .then (volcdata=>{
