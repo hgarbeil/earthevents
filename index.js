@@ -66,6 +66,12 @@ function getEvents(){
     } else {
         loadVolcs() ;
     }
+    if(!quake_show){
+        clearQuakes() ;
+    } else {
+        updateQuakes() ;
+    }
+
     if (!fire_show){
         clearFires() ;
     } else {
@@ -108,7 +114,7 @@ function get_quakes(ndays,minmag) {
                 quakeColor = "FF0000" ;
             }
             marker = L.circleMarker([quake.geometry.coordinates[1],quake.geometry.coordinates[0]],{
-                radius:quake.properties.mag**2,
+                radius:quake.properties.mag**1.5,
                 color:quakeColor,
         });
             let qdate = new Date (quake.properties.time).toISOString() ;
