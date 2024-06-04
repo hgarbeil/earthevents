@@ -2,4 +2,4 @@ Website to display on a map the latest earthquakes, volcano status levels, and o
 
 Latest version can be demonstrated at https://hgarbeil.github.io/earthevents/.
 
-<img width="1401" alt="image" src="https://github.com/hgarbeil/earthevents/assets/9002283/5de40282-994d-4a59-a078-088c8a526773">
+![image](https://github.com/hgarbeil/earthevents/assets/9002283/d2e03691-0b50-4f01-a500-2a194244d86b)
