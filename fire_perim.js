@@ -11,7 +11,7 @@ function clearFires(){
 }
 
 function updateFires(){
-    clearFires() ;
+    //clearFires() ;
     loadFires() ;
 }
 
@@ -22,7 +22,6 @@ clearFires() ;
 fetch (fireurl).then(res=>res.json())
     
     .then (firedata=>{
-        console.log(firedata.resultUrl);
         fetch (firedata.resultUrl).then(res=>res.json()).then(fires=>{
             
             for (let ifire in fires.features){
@@ -30,10 +29,8 @@ fetch (fireurl).then(res=>res.json())
             let f = fires.features[ifire] ;
             let fsize = f.properties.attr_IncidentSize ;
             if (fsize < minAcreage){
-                console.log("fire size is "+fsize+" min Acreage is : "+ minAcreage);
                 continue ;
             }
-            console.log(f);
             let mymark = L.geoJSON(f, {
                 style: {color:"#ff0000"},
                 

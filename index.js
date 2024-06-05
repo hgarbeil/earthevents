@@ -99,7 +99,7 @@ function get_quakes(ndays,minmag) {
     clearQuakes() ;
     fetch (quakeurl).then (res=>res.json()).then (qdata=>{
         
-        //console.log(qdata.features[0]);
+        console.log(qdata.features[5]);
         let nquakes = qdata.features.length ;
         
        
@@ -117,9 +117,11 @@ function get_quakes(ndays,minmag) {
                 radius:quake.properties.mag**1.5,
                 color:quakeColor,
         });
+            let qdepth = quake.geometry.coordinates[2] ;
             let qdate = new Date (quake.properties.time).toISOString() ;
             let qplace = quake.properties.place ;
-            marker.bindPopup ("<b>Magnitude : "+quake.properties.mag+"</b><br>"+qdate+"<br>"+qplace);
+            let qlink = quake.properties.url ;
+            marker.bindPopup ("<b>Magnitude : "+quake.properties.mag+"</b><br>"+qdate+"<br>"+qplace+"<br>Depth : "+qdepth+" km<br><a target='_blank' href="+qlink+">Website</href>");
                 
             marks.push(marker);
             marker.addTo(map) ;
