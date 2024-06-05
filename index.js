@@ -17,12 +17,14 @@ let firemarks=[] ;
 let volc_show= true ;
 let quake_show=true ;
 let fire_show=true ;
+let latbounds=[15,66] ;
+let lonbounds=[-170.,-1.];
 
 
 mainEl.innerHTML=`<div id="mapid" class="mapdiv"></div>`;
 
 // create N America map
-map = L.map(`mapid`).setView([35.,-90.], 4);
+map = L.map(`mapid`).setView([40.,-120.], 4);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 maxZoom: 20,
 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -94,7 +96,7 @@ function get_quakes(ndays,minmag) {
     let days = getdays(ndays) ;
     let day0 = days[0].toISOString().slice(0,10) ;
     let day1 = days[1].toISOString().slice(0,10) ;
-    quakeurl = `https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=${day0}%2000:00:00&endtime=${day1}%2023:59:59&maxlatitude=66&minlatitude=17.6&maxlongitude=-65&minlongitude=-158&minmagnitude=${minmag}&orderby=time`;
+    quakeurl = `https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=${day0}%2000:00:00&endtime=${day1}%2023:59:59&maxlatitude=${latbounds[1]}&minlatitude=${latbounds[0]}&maxlongitude=${lonbounds[1]}&minlongitude=${lonbounds[0]}&minmagnitude=${minmag}&orderby=time`;
 
     clearQuakes() ;
     fetch (quakeurl).then (res=>res.json()).then (qdata=>{

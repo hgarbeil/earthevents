@@ -23,6 +23,7 @@ body{
     font-size: 1.1rem ;
     display: flex;
     flex-direction: column;
+    max-width: 240px ;
     /* justify-content: space-between; */
 }
 .eventtype{
@@ -40,7 +41,7 @@ body{
 
 .mapdiv {
     width: 95% ;
-    height:500px ;
+    height:800px ;
     margin-top: 20px ;
 }
 .form {
