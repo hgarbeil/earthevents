@@ -4,6 +4,7 @@ const magTF = document.getElementById('magField') ;
 const daysTF = document.getElementById('daysField') ;
 const quakes_cb = document.getElementById('quakes_cb');
 const fires_cb = document.getElementById('fires_cb');
+const firms_cb = document.getElementById('firms_cb');
 const volcs_cb = document.getElementById('volcs_cb');
 let map ;
 let minMag = 3 ;
@@ -61,6 +62,7 @@ function updateQuakes() {
 function getEvents(){
     volc_show=volcs_cb.checked;
     fire_show=fires_cb.checked;
+    firms_show=firms_cb.checked;
     quake_show=quakes_cb.checked;
 
     if (!volc_show){
@@ -79,6 +81,12 @@ function getEvents(){
     } else {
         loadFires() ;
     }
+
+    // if (!firms_show){
+    //     clearFires() ;
+    // } else {
+    //     loadFires() ;
+    // }
 
 }
 
