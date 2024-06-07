@@ -1,4 +1,5 @@
-let firms_url = "https://firms2.modaps.eosdis.nasa.gov/data/active_fire/modis-c6.1/csv/MODIS_C6_1_USA_contiguous_and_Hawaii_48h.csv";
+// let firms_url = "https://firms2.modaps.eosdis.nasa.gov/data/active_fire/modis-c6.1/csv/MODIS_C6_1_USA_contiguous_and_Hawaii_48h.csv";
+let firms_url = "https://firms2.modaps.eosdis.nasa.gov/data/active_fire/modis-c6.1/csv/MODIS_C6_1_Global_48h.csv"
 let firms_marks = [] ;
 const confTE = document.getElementById('confField');
 let latval ;
@@ -35,7 +36,7 @@ $ajaxUtils.sendGetRequest (firms_url, function(responseText){
         // "latval+" , "+lonval+"<br>"+qdate+"<br>"+qplace+"<br>"+"<a target='_blank' href="+qlink+">Website</href>";
         let marker = L.circleMarker([latval,lonval],{
             radius:1,
-            color:"#930",
+            color:"#A3B",
         }) ;
         marker.bindPopup (outstring);
         marker.addTo(map);
