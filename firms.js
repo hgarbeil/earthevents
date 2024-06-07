@@ -1,6 +1,6 @@
 let firms_url = "https://firms2.modaps.eosdis.nasa.gov/data/active_fire/modis-c6.1/csv/MODIS_C6_1_USA_contiguous_and_Hawaii_48h.csv";
-let firms_mark = [] ;
-
+let firms_marks = [] ;
+const confTE = document.getElementById('confField');
 let latval ;
 let lonval ;
 let confval ;
@@ -24,13 +24,12 @@ $ajaxUtils.sendGetRequest (firms_url, function(responseText){
         if (confval < minConf){
             continue ;
         }
-
-        console.log(latval+"  :   "+lonval+"  "+confval) ;
         let marker = L.circleMarker([latval,lonval],{
-            radius:5,
-            color:"#0a0",
+            radius:1,
+            color:"#930",
         }) ;
         marker.addTo(map);
+        firms_marks.push(marker);
 
 
 
@@ -40,5 +39,20 @@ $ajaxUtils.sendGetRequest (firms_url, function(responseText){
 
 }
 
-get_firms_hotspots(70);
-        
+function updateFIRMS() {
+
+    minConf = confTE.value ;
+    clearFIRMS() ;
+    get_firms_hotspots(minConf);
+}
+    
+
+
+function clearFIRMS() {
+    for (marknum in firms_marks) {
+        map.removeLayer (firms_marks[marknum]);
+
+    } 
+    firms_marks=[] ;
+
+}

@@ -30,7 +30,7 @@
                 ">Fires</label>
               </div>
               <div>
-                <input type="checkbox" id="firms_cb" name="firms_cb" checked/>
+                <input type="checkbox" id="firms_cb" name="firms_cb" />
                 <label for="firms_cb">FIRMS Hotspots</label>
               </div>
             </form>
@@ -78,6 +78,15 @@
                   <input type="number" id="acreField" name="minAcre" value="1000">
                   <div></div>
                   <input type="button" onclick="updateFires()" value="Update Fires">
+              </form>
+              </div>
+              <div class="eventtype">
+                <h3>Current FIRMS Hotspots</h3>
+                <form id="myForm2" class="form">
+                  <label for="minConf">Minimum Confidence (0 - 100):  </label>
+                  <input type="number" id="confField" name="minConf" value="90">
+                  <div></div>
+                  <input type="button" onclick="updateFIRMS()" value="Update FIRMS">
               </form>
               </div>
               

@@ -18,8 +18,8 @@ let firemarks=[] ;
 let volc_show= true ;
 let quake_show=true ;
 let fire_show=true ;
-let latbounds=[15,66] ;
-let lonbounds=[-170.,-1.];
+let latbounds=[-80,80] ;
+let lonbounds=[-180.,180];
 
 
 mainEl.innerHTML=`<div id="mapid" class="mapdiv"></div>`;
@@ -79,14 +79,14 @@ function getEvents(){
     if (!fire_show){
         clearFires() ;
     } else {
-        loadFires() ;
+        updateFires() ;
     }
 
-    // if (!firms_show){
-    //     clearFires() ;
-    // } else {
-    //     loadFires() ;
-    // }
+    if (!firms_show){
+        clearFIRMS() ;
+    } else {
+        updateFIRMS() ;
+    }
 
 }
 

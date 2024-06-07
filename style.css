@@ -32,17 +32,20 @@ body{
     border-color:white;
     border-style: ridge;
     padding:5px ; 
+    background-color: tan;
 }
 
 .main-content {
     flex-basis: 75%;
+    background-color: bisque;
+    padding: 25px ;
 }
 
 
 .mapdiv {
     width: 95% ;
     height:800px ;
-    margin-top: 20px ;
+    /* margin-top: 20px ; */
 }
 .form {
     display: flex ;

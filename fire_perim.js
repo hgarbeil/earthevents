@@ -41,14 +41,9 @@ fetch (fireurl).then(res=>res.json())
                       f.properties.attr_PercentContained+'%<br>Rep Time : '+
                       f.properties.attr_ICS209ReportDateTime+
                       '</pre>');
-                    } 
+                } 
                 
-                // style: function(feature) {
-                //     switch (feature.properties.party) {
-                //         case 'Republican': return {color: "#ff0000"};
-                //         case 'Democrat':   return {color: "#0000ff"};
-                //     }
-                // }
+                
             })
             mymark.addTo(map);
             firemarks.push(mymark) ;
