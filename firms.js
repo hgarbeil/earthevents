@@ -4,6 +4,8 @@ const confTE = document.getElementById('confField');
 let latval ;
 let lonval ;
 let confval ;
+let brighttemp ;
+let acqtime ;
 
 
 function get_firms_hotspots(minConf) { 
@@ -13,21 +15,29 @@ $ajaxUtils.sendGetRequest (firms_url, function(responseText){
     console.log(lines[0]);
     let line0 = lines[0] ;
     for (i in lines){
+
         if (i == 0 || lines[i].length<10) {
             continue ;
         }
         let cols = lines[i].split(',');
         
+        
         latval = cols[0];
         lonval = cols[1];
+        brighttemp = cols[2];
         confval = cols[8];
         if (confval < minConf){
             continue ;
         }
+        acqtime = cols[5]+' '+cols[6]+" UTM";
+        let outstring = `${acqtime}<br>Lat: ${latval} , Lon: ${lonval}<br>Confidence : ${confval}<br>Brightness: ${brighttemp}` ;
+        
+        // "latval+" , "+lonval+"<br>"+qdate+"<br>"+qplace+"<br>"+"<a target='_blank' href="+qlink+">Website</href>";
         let marker = L.circleMarker([latval,lonval],{
             radius:1,
             color:"#930",
         }) ;
+        marker.bindPopup (outstring);
         marker.addTo(map);
         firms_marks.push(marker);
 
