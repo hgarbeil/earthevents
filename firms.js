@@ -1,7 +1,8 @@
 // let firms_url = "https://firms2.modaps.eosdis.nasa.gov/data/active_fire/modis-c6.1/csv/MODIS_C6_1_USA_contiguous_and_Hawaii_48h.csv";
-let firms_url = "https://firms2.modaps.eosdis.nasa.gov/data/active_fire/modis-c6.1/csv/MODIS_C6_1_Global_48h.csv"
+let firms_url0 = "https://firms2.modaps.eosdis.nasa.gov/data/active_fire/modis-c6.1/csv/MODIS_C6_1_Global_"
 let firms_marks = [] ;
 const confTE = document.getElementById('confField');
+const timePeriodCB = document.getElementById('timePeriodCBox');
 let latval ;
 let lonval ;
 let confval ;
@@ -9,7 +10,8 @@ let brighttemp ;
 let acqtime ;
 
 
-function get_firms_hotspots(minConf) { 
+function get_firms_hotspots(timePer, minConf) {
+let firms_url = firms_url0+timePer+".csv" ;
 $ajaxUtils.sendGetRequest (firms_url, function(responseText){
     
     let lines = responseText.split("\n") ;
@@ -52,9 +54,10 @@ $ajaxUtils.sendGetRequest (firms_url, function(responseText){
 
 function updateFIRMS() {
 
+    let timePer = timePeriodCB.value;
     minConf = confTE.value ;
     clearFIRMS() ;
-    get_firms_hotspots(minConf);
+    get_firms_hotspots(timePer, minConf);
 }
     
 

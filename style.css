@@ -55,7 +55,12 @@ body{
 }
 .form *{
     margin-top:10px ;
+    font-size: 1.2rem;
 }
-.form input {
-    font-size: 1.2rem ;
+.cbox {
+    font-size: 2rem ;
 }
+.myoption {
+    font-size: 2.2rem ;
+}
+
