@@ -37,16 +37,23 @@ body{
     background-color: tan;
 }
 
-.main-content {
+.main {
     flex-basis: 75%;
+    display: flex ;
+    flex-direction: column ;
+    /* justify-content: space-evenly; */
     background-color: bisque;
     padding: 25px ;
+}
+.tablesec{
+    display:flex ;
+    flex-direction: column;
 }
 
 
 .mapdiv {
     width: 95% ;
-    height:800px ;
+    height:500px ;
     /* margin-top: 20px ; */
 }
 .form {
@@ -57,10 +64,98 @@ body{
     margin-top:10px ;
     font-size: 1.2rem;
 }
-.cbox {
-    font-size: 2rem ;
+
+
+/* Style the tab */
+
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #00cf68 ;
+    margin-top: 20px ;
+    margin-bottom: 0px ;
+    border-top-left-radius: 10px ;
+    border-top-right-radius: 10px ;
+
+  }
+  
+  /* Style the buttons that are used to open the tab content */
+  .tab button {
+    background-color: inherit;
+    float: left;
+    border: 2px solid tan ;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-family: 'Arial Bold' ;
+    font-size: 1.4rem ;
+
+  }
+
+  /* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+  }
+  
+  /* Create an active/current tablink class */
+  .tab button.active {
+    background-color: #cc0;
+  }
+  
+  /* Style the tab content */
+  .tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+  }
+
+  .content-table {
+    table-layout: auto;
+    border-collapse :collapse ;
+    margin: 10px  ;
+    font-size: 0.9rem ;
+    width: 100% ;
+    border-radius: 5px 5px 0 0 ;
+    overflow: hidden ;
+    box-shadow: 0 0 20px rgba(0,0,0,.3);
+    align-self: center ;
+    margin-top: 0px ;
 }
-.myoption {
-    font-size: 2.2rem ;
+
+.content-table thead tr {
+    
+    background-color: #00cf68 ;
+    color: white ;
+    text-align: left ;
+    font-weight: bold ;
 }
+
+.content-table tbody td
+ {
+
+    padding: 12px 15px ;
+    /* width: 100% ; */
+
+
+}
+
+.content-table tbody tr {
+    border-bottom : 1px solid #dddddd ;
+    background-color: white ;
+    color: black ;
+}
+
+.content-table tbody tr:nth-of-type(odd) {
+    background-color: lightcyan ;
+    color: black;
+}
+.content-table tbody tr.active:nth-of-type(even) {
+    background-color: ffaa00;
+    color: yellow;
+}
+
+
+
 

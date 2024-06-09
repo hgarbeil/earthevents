@@ -6,6 +6,8 @@ const quakes_cb = document.getElementById('quakes_cb');
 const fires_cb = document.getElementById('fires_cb');
 const firms_cb = document.getElementById('firms_cb');
 const volcs_cb = document.getElementById('volcs_cb');
+let theadEl = document.createElement("thead");
+let tbodyEl = document.createElement("tbody");
 let map ;
 let minMag = 3 ;
 let nDays = 7 ;
@@ -20,6 +22,7 @@ let quake_show=true ;
 let fire_show=true ;
 let latbounds=[-80,80] ;
 let lonbounds=[-180.,180];
+let quakeHeadings=['Name','Magnitude','Lat','Lon','Time','Depth'];
 
 
 mainEl.innerHTML=`<div id="mapid" class="mapdiv"></div>`;
@@ -40,6 +43,32 @@ $( document ).ready(function(){
     });
 });
 
+function openType(evt, cityName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+  
+    console.log(cityName) ;
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+  
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+  
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    // document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+    switch(cityName){
+        case 'equake':
+            updateQuakes() ;
+
+    }
+  }
 
 
 // getdays returns the current day and the day ndays before the current day
@@ -126,7 +155,7 @@ function get_quakes(ndays,minmag) {
             marker = L.circleMarker([quake.geometry.coordinates[1],quake.geometry.coordinates[0]],{
                 radius:quake.properties.mag**1.5,
                 color:quakeColor,
-        });
+            });
             let qdepth = quake.geometry.coordinates[2] ;
             let qdate = new Date (quake.properties.time).toISOString() ;
             let qplace = quake.properties.place ;
@@ -135,17 +164,80 @@ function get_quakes(ndays,minmag) {
                 
             marks.push(marker);
             marker.addTo(map) ;
+            
 
 
         }
+        createTable(qdata);
 
 
     });
     
     }
 
+
+function createTable (qdata) {
+    console.log("creating table") ;
+    let tableEl = document.getElementById('toptable') ;
+    
+    tableEl.innerHTML="";
+    theadEl.innerHTML="" ;
+    tbodyEl.innerHTML="" ;
+    let myTr = document.createElement("tr") ;
+    myTr.classList.add('tr-head') ;
+    for (i in quakeHeadings) {
+        let myTh = document.createElement('th') ;
+        myTh.innerHTML = quakeHeadings[i] ;
+        if (i==2 || i==3){
+            myTh.classList.add('priority-low');
+        }
+        myTr.appendChild(myTh) ;
+    }
+    theadEl.appendChild(myTr) ;
+
+    let nquakes = qdata.features.length ;
+        
+       
+    for (i=0; i<nquakes; i++){
+        myTr = document.createElement("tr") ;
+        let myTd0 = document.createElement('td') ;
+        myTd0.innerHTML = "<a target='_blank' href="+qdata.features[i].properties.url+">"+qdata.features[i].properties.place+"</href>"
+        // myTd0.innerHTML = qdata.features[i].properties.place ;
+        myTr.appendChild(myTd0);
+        myTd0 = document.createElement('td') ;
+        myTd0.innerHTML = qdata.features[i].properties.mag;
+        myTr.appendChild(myTd0);
+        myTd0 = document.createElement('td') ;
+        myTd0.innerHTML= Number(qdata.features[i].geometry.coordinates[1]).toFixed(3) ;
+        myTr.appendChild(myTd0);
+        myTd0 = document.createElement('td') ;
+        myTd0.innerHTML=Number(qdata.features[i].geometry.coordinates[0]).toFixed(3) ;
+        myTr.appendChild(myTd0);
+        myTd0 = document.createElement('td') ;
+        let qdate = new Date (qdata.features[i].properties.time).toISOString() ;
+        myTd0.innerHTML=qdate ;
+        myTr.appendChild(myTd0);
+        myTd0 = document.createElement('td') ;
+        myTd0.innerHTML = Number(qdata.features[i].geometry.coordinates[2]).toFixed(1);
+        myTr.appendChild(myTd0);
+       
+        tbodyEl.appendChild(myTr) ;
+    }
+        
+
+        
+
+        
+
+
+    tableEl.appendChild(theadEl) ;
+    tableEl.appendChild(tbodyEl) ;
+
+
+
+}
+
 updateQuakes() ;
-get_quakes(nDays, minMag) ;
 
 
 
