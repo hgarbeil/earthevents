@@ -39,7 +39,6 @@ attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreet
 $( document ).ready(function(){
     $("#event_show_cb").on("change", "input:checkbox", function(){
         //$("#formname").submit();
-        console.log("event cb hit") ;
         getEvents();
     });
 });
@@ -68,11 +67,16 @@ function openType(evt, type) {
         case 'equake':
             tableMode = 0 ; 
             tableMode = 0 ;
+            updateQuakes() ;
             break ;
         case 'volc' :
             tableMode = 1 ;
             getFlags() ;
             loadVolcs() ;
+            break ;
+        case 'wildf' :
+            tableMode = 2 ;
+            loadFires() ;
             break ;
 
     }
@@ -196,8 +200,6 @@ function createQuakeTable (qdata) {
     let myTr = document.createElement("tr") ;
     myTr.classList.add('tr-head') ;
 
-
-    
             for (i in quakeHeadings) {
                 let myTh = document.createElement('th') ;
                 myTh.innerHTML = quakeHeadings[i] ;
