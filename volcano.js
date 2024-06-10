@@ -163,7 +163,7 @@ function loadVolcTable(volcdata) {
     }
     theadEl.appendChild(myTr) ;
     for (i in volcdata){
-        if (volcdata[i].alertLevel == 'ADVISORY'){
+        if (volcdata[i].alertLevel == 'ADVISORY' || volcdata[i].alertLevel == 'WATCH' || volcdata[i].alertLevel == 'WARNING' ){
             console.log(volcdata[i]);
             let myTr = document.createElement("tr") ;
             let myTd0 = document.createElement('td') ;
