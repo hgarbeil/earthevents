@@ -2,4 +2,5 @@ Website to display on a map the latest earthquakes, current volcano alert levels
 
 Latest version can be demonstrated at https://hgarbeil.github.io/earthevents/.
 
-![image](https://github.com/hgarbeil/earthevents/assets/9002283/d2e03691-0b50-4f01-a500-2a194244d86b)
+
+<img width="1357" alt="Screenshot 2024-06-10 at 7 07 08 AM" src="https://github.com/hgarbeil/earthevents/assets/9002283/9c6dad90-708a-47ca-85a2-efd614746e7f">
