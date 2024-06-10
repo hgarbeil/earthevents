@@ -9,6 +9,8 @@ let green_flag = true ;
 let yellow_flag = false ;
 let red_flag = false ;
 
+let volcHeadings=['Name','Alert Level','Lat','Lon','Date'];
+
 // monitored volcanoes
 // volcurl = 'https://volcanoes.usgs.gov/hans-public/api/volcano/getMonitoredVolcanoes';
 
@@ -132,46 +134,68 @@ fetch ('https://volcanoes.usgs.gov/vsc/api/volcanoApi/vhpstatus').then(res=>res.
                 
             }
         
-        
-
-        // fetch (volcurl).then (res=>res.json()).then (vdata=>{
-        //     //console.log(vdata);
-        //     for(var i in vdata){
-        //         for (var z in volcdata){
-        //             if (vdata[i].vnum===volcdata[z].vnum){
-        //                 vdata[i].lat = volcdata[z].lat ;
-        //                 vdata[i].lon = volcdata[z].long ;
-        //                 // for(var attr in features2[z].properties){
-        //                 //     features[i].properties[attr] = features2[z].properties[attr];
-        //                 // }
-        //                 console.log(vdata[i]);
-        //             }
-        //         }
-        //     }
-
-
-
-        // }) ;
-       
-        // for (i=0; i<nvolcs; i++){
-        //     let volc = volcdata[i];
-        //     let marker = L.marker([volc.lat,volc.long]);
-            
-        //     if (volc.alertLevel == 'ADVISORY'){
-        //         console.log(volc.volcName + "  : "+volc.colorCode);
-        //     }
-        //     marker.addTo(map);
-
-
-
-        // }
+        if (tableMode==1) {
+            loadVolcTable (volcdata);
+        }
 
 
 
     });
 }
 
+function loadVolcTable(volcdata) {
+    console.log("creating volc table") ;
+    let tableEl = document.getElementById('toptable') ;
+    
+    tableEl.innerHTML="";
+    theadEl.innerHTML="" ;
+    tbodyEl.innerHTML="" ;
 
+    let myTr = document.createElement("tr") ;
+    myTr.classList.add('tr-head') ;
+    for (i in volcHeadings) {
+        let myTh = document.createElement('th') ;
+        myTh.innerHTML = volcHeadings[i] ;
+        if (i==2 || i==3){
+            myTh.classList.add('priority-low');
+        }
+        myTr.appendChild(myTh) ;
+    }
+    theadEl.appendChild(myTr) ;
+    for (i in volcdata){
+        if (volcdata[i].alertLevel == 'ADVISORY'){
+            console.log(volcdata[i]);
+            let myTr = document.createElement("tr") ;
+            let myTd0 = document.createElement('td') ;
+            myTd0.innerHTML = "<a target='_blank' href="+volcdata[i].vUrl+">"+volcdata[i].vName+"</href>" ;
+            // myTd0.innerHTML = qdata.features[i].properties.place ;
+            myTr.appendChild(myTd0);
+            myTd0 = document.createElement('td') ;
+            myTd0.innerHTML = volcdata[i].colorCode ;
+            myTr.appendChild(myTd0);
+            myTd0 = document.createElement('td') ;
+            myTd0.innerHTML = volcdata[i].lat ;
+            myTr.appendChild(myTd0);
+            myTd0 = document.createElement('td') ;
+            myTd0.innerHTML = volcdata[i].long ;
+            myTr.appendChild(myTd0);
+            myTd0 = document.createElement('td') ;
+            myTd0.innerHTML = volcdata[i].alertDate ;
+            myTr.appendChild(myTd0);
+            // myTd0 = document.createElement('td') ;
+            // myTd0.innerHTML = "<a target='_blank' href="+qdata.features[i].properties.url+">"+qdata.features[i].properties.place+"</href>"
+            // // myTd0.innerHTML = qdata.features[i].properties.place ;
+            // myTr.appendChild(myTd0);
+            tbodyEl.appendChild(myTr) ;
+        }
+        
+    }
+
+    tableEl.appendChild(theadEl) ;
+    tableEl.appendChild(tbodyEl) ;
+
+
+}
 
 
 // function get_volcanoes(ndays,minmag) {

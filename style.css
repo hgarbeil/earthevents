@@ -71,7 +71,7 @@ body{
 .tab {
     overflow: hidden;
     border: 1px solid #ccc;
-    background-color: #00cf68 ;
+    background-color: lightgray ;
     margin-top: 20px ;
     margin-bottom: 0px ;
     border-top-left-radius: 10px ;
@@ -126,8 +126,8 @@ body{
 
 .content-table thead tr {
     
-    background-color: #00cf68 ;
-    color: white ;
+    background-color: lightgray ;
+    color: black;
     text-align: left ;
     font-weight: bold ;
 }

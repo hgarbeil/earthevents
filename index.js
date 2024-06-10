@@ -23,6 +23,7 @@ let fire_show=true ;
 let latbounds=[-80,80] ;
 let lonbounds=[-180.,180];
 let quakeHeadings=['Name','Magnitude','Lat','Lon','Time','Depth'];
+let tableMode = 0 ;
 
 
 mainEl.innerHTML=`<div id="mapid" class="mapdiv"></div>`;
@@ -43,11 +44,11 @@ $( document ).ready(function(){
     });
 });
 
-function openType(evt, cityName) {
+function openType(evt, type) {
     // Declare all variables
     var i, tabcontent, tablinks;
   
-    console.log(cityName) ;
+    console.log(type) ;
     // Get all elements with class="tabcontent" and hide them
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
@@ -63,9 +64,16 @@ function openType(evt, cityName) {
     // Show the current tab, and add an "active" class to the button that opened the tab
     // document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";
-    switch(cityName){
+    switch(type){
         case 'equake':
-            updateQuakes() ;
+            tableMode = 0 ; 
+            tableMode = 0 ;
+            break ;
+        case 'volc' :
+            tableMode = 1 ;
+            getFlags() ;
+            loadVolcs() ;
+            break ;
 
     }
   }
@@ -168,7 +176,8 @@ function get_quakes(ndays,minmag) {
 
 
         }
-        createTable(qdata);
+        if (tableMode ==0)
+            createQuakeTable(qdata);
 
 
     });
@@ -176,60 +185,58 @@ function get_quakes(ndays,minmag) {
     }
 
 
-function createTable (qdata) {
+function createQuakeTable (qdata) {
     console.log("creating table") ;
     let tableEl = document.getElementById('toptable') ;
     
     tableEl.innerHTML="";
     theadEl.innerHTML="" ;
     tbodyEl.innerHTML="" ;
+
     let myTr = document.createElement("tr") ;
     myTr.classList.add('tr-head') ;
-    for (i in quakeHeadings) {
-        let myTh = document.createElement('th') ;
-        myTh.innerHTML = quakeHeadings[i] ;
-        if (i==2 || i==3){
-            myTh.classList.add('priority-low');
-        }
-        myTr.appendChild(myTh) ;
-    }
-    theadEl.appendChild(myTr) ;
-
-    let nquakes = qdata.features.length ;
-        
-       
-    for (i=0; i<nquakes; i++){
-        myTr = document.createElement("tr") ;
-        let myTd0 = document.createElement('td') ;
-        myTd0.innerHTML = "<a target='_blank' href="+qdata.features[i].properties.url+">"+qdata.features[i].properties.place+"</href>"
-        // myTd0.innerHTML = qdata.features[i].properties.place ;
-        myTr.appendChild(myTd0);
-        myTd0 = document.createElement('td') ;
-        myTd0.innerHTML = qdata.features[i].properties.mag;
-        myTr.appendChild(myTd0);
-        myTd0 = document.createElement('td') ;
-        myTd0.innerHTML= Number(qdata.features[i].geometry.coordinates[1]).toFixed(3) ;
-        myTr.appendChild(myTd0);
-        myTd0 = document.createElement('td') ;
-        myTd0.innerHTML=Number(qdata.features[i].geometry.coordinates[0]).toFixed(3) ;
-        myTr.appendChild(myTd0);
-        myTd0 = document.createElement('td') ;
-        let qdate = new Date (qdata.features[i].properties.time).toISOString() ;
-        myTd0.innerHTML=qdate ;
-        myTr.appendChild(myTd0);
-        myTd0 = document.createElement('td') ;
-        myTd0.innerHTML = Number(qdata.features[i].geometry.coordinates[2]).toFixed(1);
-        myTr.appendChild(myTd0);
-       
-        tbodyEl.appendChild(myTr) ;
-    }
-        
-
-        
-
-        
 
 
+    
+            for (i in quakeHeadings) {
+                let myTh = document.createElement('th') ;
+                myTh.innerHTML = quakeHeadings[i] ;
+                if (i==2 || i==3){
+                    myTh.classList.add('priority-low');
+                }
+                myTr.appendChild(myTh) ;
+            }
+            theadEl.appendChild(myTr) ;
+
+            let nquakes = qdata.features.length ;
+                
+            
+            for (i=0; i<nquakes; i++){
+                myTr = document.createElement("tr") ;
+                let myTd0 = document.createElement('td') ;
+                myTd0.innerHTML = "<a target='_blank' href="+qdata.features[i].properties.url+">"+qdata.features[i].properties.place+"</href>"
+                // myTd0.innerHTML = qdata.features[i].properties.place ;
+                myTr.appendChild(myTd0);
+                myTd0 = document.createElement('td') ;
+                myTd0.innerHTML = qdata.features[i].properties.mag;
+                myTr.appendChild(myTd0);
+                myTd0 = document.createElement('td') ;
+                myTd0.innerHTML= Number(qdata.features[i].geometry.coordinates[1]).toFixed(3) ;
+                myTr.appendChild(myTd0);
+                myTd0 = document.createElement('td') ;
+                myTd0.innerHTML=Number(qdata.features[i].geometry.coordinates[0]).toFixed(3) ;
+                myTr.appendChild(myTd0);
+                myTd0 = document.createElement('td') ;
+                let qdate = new Date (qdata.features[i].properties.time).toISOString() ;
+                myTd0.innerHTML=qdate ;
+                myTr.appendChild(myTd0);
+                myTd0 = document.createElement('td') ;
+                myTd0.innerHTML = Number(qdata.features[i].geometry.coordinates[2]).toFixed(1);
+                myTr.appendChild(myTd0);
+            
+                tbodyEl.appendChild(myTr) ;
+            }
+    
     tableEl.appendChild(theadEl) ;
     tableEl.appendChild(tbodyEl) ;
 
