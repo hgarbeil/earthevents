@@ -47,7 +47,6 @@ function openType(evt, type) {
     // Declare all variables
     var i, tabcontent, tablinks;
   
-    console.log(type) ;
     // Get all elements with class="tabcontent" and hide them
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
@@ -94,7 +93,6 @@ function getdays(ndays){
 }
 
 function updateQuakes() {
-    console.log("Hello") ;
     nDays = daysTF.value ;
     nMag = magTF.value ;
     get_quakes(nDays,nMag) ;
@@ -150,7 +148,6 @@ function get_quakes(ndays,minmag) {
     clearQuakes() ;
     fetch (quakeurl).then (res=>res.json()).then (qdata=>{
         
-        console.log(qdata.features[5]);
         let nquakes = qdata.features.length ;
         
        

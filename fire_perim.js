@@ -32,7 +32,6 @@ fetch (fireurl).then(res=>res.json())
             if (fsize < minAcreage){
                 continue ;
             }
-            console.log(f);
             let mymark = L.geoJSON(f, {
                 style: {color:"#ff0000"},
                 

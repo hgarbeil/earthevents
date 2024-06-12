@@ -122,6 +122,11 @@ body{
     box-shadow: 0 0 20px rgba(0,0,0,.3);
     align-self: center ;
     margin-top: 0px ;
+
+}
+
+.content-table thead {
+   /* // padding-top: 20px ; */
 }
 
 .content-table thead tr {
