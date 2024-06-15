@@ -111,4 +111,4 @@ function loadFiresTable (fires, minAcreage){
 }
 
 
-loadFires() ;
+//loadFires() ;
