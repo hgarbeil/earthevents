@@ -3,7 +3,7 @@ const occur_flood_url = 'https://www.wpc.ncep.noaa.gov/nationalfloodoutlook/occu
 const likely_flood_url = 'https://www.wpc.ncep.noaa.gov/nationalfloodoutlook/likely.geojson';
 const poss_flood_url = 'https://www.wpc.ncep.noaa.gov/nationalfloodoutlook/possible.geojson';
 const alerts_url = 'https://api.weather.gov/alerts/active';
-let floodmarks=[] ;
+let weathermarks=[] ;
 
 let headers = new Headers();
 
@@ -15,18 +15,18 @@ headers.append('Access-Control-Allow-Credentials', 'true');
 
 headers.append('GET', 'POST', 'OPTIONS');
 
-function clearFloods (){
-    for (marknum in floodmarks) {
-        map.removeLayer (floodmarks[marknum]);
+function clearWeather (){
+    for (marknum in weathermarks) {
+        map.removeLayer (weathermarks[marknum]);
 
     }
-    floodmarks=[] ;
+    weathermarks=[] ;
 }
 
 
-function loadFloods(){
+function updateWeather(){
     //console.log("min acreage is "+ minAcreage);
-    clearFloods() ;
+    clearWeather() ;
     // $ajaxUtils.sendGetRequest (likely_flood_url, function(responseText){
     fetch (alerts_url).then(res=>res.json())
         .then (wdata=>{
@@ -58,6 +58,7 @@ function loadFloods(){
                         // } 
                     
                     mymark.addTo(map);
+                    weathermarks.push(mymark);
 
                 }
             }
@@ -67,5 +68,53 @@ function loadFloods(){
         );
 }
 
-loadFloods() ;
+function loadWeatherTable (events){
+    console.log("creating weather table") ;
+    let tableEl = document.getElementById('toptable') ;
+    
+    tableEl.innerHTML="";
+    theadEl.innerHTML="" ;
+    tbodyEl.innerHTML="" ;
+
+    let myTr = document.createElement("tr") ;
+    myTr.classList.add('tr-head') ;
+    for (i in fireHeadings) {
+        let myTh = document.createElement('th') ;
+        myTh.innerHTML = fireHeadings[i] ;
+        if (i==2 || i==3){
+            myTh.classList.add('priority-low');
+        }
+        myTr.appendChild(myTh) ;
+    }
+    theadEl.appendChild(myTr) ;
+    for (i in events.features){
+        f = fires.features[i];
+        let fsize = f.properties.attr_IncidentSize ;
+        
+        let myTr = document.createElement("tr") ;
+        let myTd0 = document.createElement('td') ;
+        myTd0.innerHTML = f.properties.poly_IncidentName ;
+        myTr.appendChild (myTd0);
+        myTd0 = document.createElement('td') ;
+        myTd0.innerHTML = fsize ;
+        myTr.appendChild (myTd0);
+        myTd0 = document.createElement('td') ;
+        myTd0.innerHTML =  f.properties.attr_FireBehaviorGeneral;
+        myTr.appendChild (myTd0);
+        myTd0 = document.createElement('td') ;
+        myTd0.innerHTML =  f.properties.attr_PercentContained;
+        myTr.appendChild (myTd0);
+        myTd0 = document.createElement('td') ;
+        myTd0.innerHTML =  f.properties.attr_ICS209ReportDateTime;
+        myTr.appendChild (myTd0); 
+        myTd0 = document.createElement('td') ;
+        myTd0.innerHTML =  f.properties.attr_IncidentShortDescription;
+        myTr.appendChild (myTd0);
+        tbodyEl.appendChild(myTr);   
+
+    }
+    tableEl.appendChild(theadEl);
+    tableEl.appendChild(tbodyEl);
+}
+
     

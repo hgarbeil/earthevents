@@ -1,8 +1,7 @@
 const acreTF = document.getElementById ("acreField") ;
 let fireHeadings = ['Name','Size (Acres)','Behavior','Percent Contained','Report Time','Description'];
 let fireurl = 'https://services3.arcgis.com/T4QMspbfLg3qTGWY/arcgis/rest/services/WFIGS_Interagency_Perimeters_Current/FeatureServer/jobs/a9af9310-bf0a-41eb-9e7a-9db590421661?f=json';
-
-
+fireurl = 'https://services3.arcgis.com/T4QMspbfLg3qTGWY/arcgis/rest/services/WFIGS_Interagency_Perimeters_Current/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson';
 function clearFires(){
     for (marknum in firemarks) {
         map.removeLayer (firemarks[marknum]);
@@ -18,16 +17,17 @@ function updateFires(){
 
 function loadFires(){
 let minAcreage = acreTF.value ;
-console.log("min acreage is "+ minAcreage);
+console.log(fireurl);
 clearFires() ;
 fetch (fireurl).then(res=>res.json())
     
     .then (firedata=>{
-        fetch (firedata.resultUrl).then(res=>res.json()).then(fires=>{
+        console.log(firedata);
+        //fetch (firedata.resultUrl).then(res=>res.json()).then(fires=>{
             
-            for (let ifire in fires.features){
+            for (let ifire in firedata.features){
 
-            let f = fires.features[ifire] ;
+            let f = firedata.features[ifire] ;
             let fsize = f.properties.attr_IncidentSize ;
             if (fsize < minAcreage){
                 continue ;
@@ -51,9 +51,9 @@ fetch (fireurl).then(res=>res.json())
             }
             if (tableMode ==2){
                 console.log("load fires") ;
-                loadFiresTable(fires, minAcreage) ;
+                loadFiresTable(firedata, minAcreage) ;
             }
-        });
+        //});
         
     }
 

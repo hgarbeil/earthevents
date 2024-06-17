@@ -6,6 +6,7 @@ const quakes_cb = document.getElementById('quakes_cb');
 const fires_cb = document.getElementById('fires_cb');
 const firms_cb = document.getElementById('firms_cb');
 const volcs_cb = document.getElementById('volcs_cb');
+const weather_cb = document.getElementById('weather_cb');
 let theadEl = document.createElement("thead");
 let tbodyEl = document.createElement("tbody");
 let map ;
@@ -20,6 +21,7 @@ let firemarks=[] ;
 let volc_show= true ;
 let quake_show=true ;
 let fire_show=true ;
+let weather_show=true ;
 let latbounds=[-80,80] ;
 let lonbounds=[-180.,180];
 let quakeHeadings=['Name','Magnitude','Lat','Lon','Time','Depth'];
@@ -103,6 +105,7 @@ function getEvents(){
     fire_show=fires_cb.checked;
     firms_show=firms_cb.checked;
     quake_show=quakes_cb.checked;
+    weather_show=weather_cb.checked ;
 
     if (!volc_show){
         clearVolcs() ;
@@ -125,6 +128,11 @@ function getEvents(){
         clearFIRMS() ;
     } else {
         updateFIRMS() ;
+    }
+    if (!weather_show){
+        clearWeather() ;
+    } else {
+        updateWeather() ;
     }
 
 }
