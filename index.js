@@ -79,6 +79,10 @@ function openType(evt, type) {
             tableMode = 2 ;
             loadFires() ;
             break ;
+        case 'weather' :
+            tableMode = 3 ;
+            updateWeather() ;
+            break ;
 
     }
   }

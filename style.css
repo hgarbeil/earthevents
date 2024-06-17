@@ -100,7 +100,7 @@ body{
   
   /* Create an active/current tablink class */
   .tab button.active {
-    background-color: #cc0;
+    background-color: #fa0;
   }
   
   /* Style the tab content */

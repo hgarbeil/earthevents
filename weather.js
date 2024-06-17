@@ -4,6 +4,7 @@ const likely_flood_url = 'https://www.wpc.ncep.noaa.gov/nationalfloodoutlook/lik
 const poss_flood_url = 'https://www.wpc.ncep.noaa.gov/nationalfloodoutlook/possible.geojson';
 const alerts_url = 'https://api.weather.gov/alerts/active';
 let weathermarks=[] ;
+let weatherHeadings = ['Description','Severity','Start','End'];
 
 let headers = new Headers();
 
@@ -62,7 +63,9 @@ function updateWeather(){
 
                 }
             }
-            
+            if (tableMode==3){
+                loadWeatherTable (wdata) ;
+            }
         }
     
         );
@@ -78,9 +81,9 @@ function loadWeatherTable (events){
 
     let myTr = document.createElement("tr") ;
     myTr.classList.add('tr-head') ;
-    for (i in fireHeadings) {
+    for (i in weatherHeadings) {
         let myTh = document.createElement('th') ;
-        myTh.innerHTML = fireHeadings[i] ;
+        myTh.innerHTML = weatherHeadings[i] ;
         if (i==2 || i==3){
             myTh.classList.add('priority-low');
         }
@@ -88,27 +91,23 @@ function loadWeatherTable (events){
     }
     theadEl.appendChild(myTr) ;
     for (i in events.features){
-        f = fires.features[i];
-        let fsize = f.properties.attr_IncidentSize ;
+        f = events.features[i];
+        let fsize = f.properties.headline ;
         
         let myTr = document.createElement("tr") ;
         let myTd0 = document.createElement('td') ;
-        myTd0.innerHTML = f.properties.poly_IncidentName ;
+        myTd0.innerHTML = f.properties.headline ;
         myTr.appendChild (myTd0);
         myTd0 = document.createElement('td') ;
-        myTd0.innerHTML = fsize ;
+        myTd0.innerHTML = f.properties.severity ;
         myTr.appendChild (myTd0);
         myTd0 = document.createElement('td') ;
-        myTd0.innerHTML =  f.properties.attr_FireBehaviorGeneral;
+        myTd0.innerHTML =  f.properties.effective ;
         myTr.appendChild (myTd0);
         myTd0 = document.createElement('td') ;
-        myTd0.innerHTML =  f.properties.attr_PercentContained;
-        myTr.appendChild (myTd0);
-        myTd0 = document.createElement('td') ;
-        myTd0.innerHTML =  f.properties.attr_ICS209ReportDateTime;
-        myTr.appendChild (myTd0); 
-        myTd0 = document.createElement('td') ;
-        myTd0.innerHTML =  f.properties.attr_IncidentShortDescription;
+        myTd0.innerHTML =  f.properties.expires;
+        // myTr.appendChild (myTd0);
+       
         myTr.appendChild (myTd0);
         tbodyEl.appendChild(myTr);   
 
