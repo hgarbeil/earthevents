@@ -21,6 +21,7 @@ let firemarks=[] ;
 let volc_show= true ;
 let quake_show=true ;
 let fire_show=true ;
+let firms_show=false ;
 let weather_show=true ;
 let latbounds=[-80,80] ;
 let lonbounds=[-180.,180];
@@ -45,6 +46,7 @@ $( document ).ready(function(){
     });
 });
 
+// function for selecting which table to display
 function openType(evt, type) {
     // Declare all variables
     var i, tabcontent, tablinks;
@@ -123,8 +125,10 @@ function getEvents(){
     }
 
     if (!fire_show){
+        console.log("fires unchecked");
         clearFires() ;
     } else {
+        console.log("fires checked");
         updateFires() ;
     }
 

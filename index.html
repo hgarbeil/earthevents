@@ -25,16 +25,15 @@
                 <label for="volc_cb">Volcano</label>
               </div>
               <div>
-                <input type="checkbox" id="fires_cb" name="fires_cb" checked/>
-                <label for="fires_cb
-                ">Fire Perimeters</label>
+                <input type="checkbox" id="fires_cb" name="fires_cb"  />
+                <label for="fires_cb">Fire Perimeters</label>
               </div>
               <div>
                 <input type="checkbox" id="firms_cb" name="firms_cb" />
                 <label for="firms_cb">FIRMS Hotspots</label>
               </div>
               <div>
-                <input type="checkbox" id="weather_cb" name="weather_cb" />
+                <input type="checkbox" id="weather_cb" name="weather_cb"  />
                 <label for="weather_cb">Weather</label>
               </div>
             </form>
@@ -116,7 +115,7 @@
               <button class="tablinks" onclick="openType(event, 'wildf')">Wildfires</button>
               <button class="tablinks" onclick="openType(event, 'weather')">NWS Alerts</button>
             </div>
-            <table id='toptable' class="content-table">
+            <table id='toptable' class="content-table" onclick="tableClick(event)">
               <tr>
                 <th>Company</th>
                 <th>Contact</th>

@@ -1,20 +1,19 @@
-const occur_flood_url = 'https://www.wpc.ncep.noaa.gov/nationalfloodoutlook/occurring.geojson' ;
-//const occur_flood_url = 'https://mapservices.weather.noaa.gov/vector/rest/services/outlooks/long_range_flood_outlook/MapServer?f=pjson';
-const likely_flood_url = 'https://www.wpc.ncep.noaa.gov/nationalfloodoutlook/likely.geojson';
+
 const poss_flood_url = 'https://www.wpc.ncep.noaa.gov/nationalfloodoutlook/possible.geojson';
 const alerts_url = 'https://api.weather.gov/alerts/active';
 let weathermarks=[] ;
+let eventsDisplayed=[];
 let weatherHeadings = ['Description','Severity','Start','End'];
 
-let headers = new Headers();
+// let headers = new Headers();
 
-headers.append('Content-Type', 'application/json');
-headers.append('Accept', 'application/json');
+// headers.append('Content-Type', 'application/json');
+// headers.append('Accept', 'application/json');
 
-headers.append('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
-headers.append('Access-Control-Allow-Credentials', 'true');
+// headers.append('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
+// headers.append('Access-Control-Allow-Credentials', 'true');
 
-headers.append('GET', 'POST', 'OPTIONS');
+// headers.append('GET', 'POST', 'OPTIONS');
 
 function clearWeather (){
     for (marknum in weathermarks) {
@@ -34,7 +33,11 @@ function updateWeather(){
             console.log(wdata.features[1]);
             for (i in wdata.features){
                 w = wdata.features[i] ;
+                
                 if (w.geometry != null){
+                    if (w.properties.severity == 'Unknown' || w.properties.severity == 'Minor'){
+                        continue ;
+                    }
                     let thislength = w.properties.headline.length ;
                     let mymark = L.geoJSON(w, {
                         style: {color:"#00a"},
@@ -91,15 +94,22 @@ function loadWeatherTable (events){
     }
     theadEl.appendChild(myTr) ;
     for (i in events.features){
+
         f = events.features[i];
+        if (f.properties.severity == 'Unknown' || f.properties.severity == 'Minor'){
+            console.log("unsevere");
+            continue ;
+        }
         let fsize = f.properties.headline ;
+        eventsDisplayed.push (f) ;
         
         let myTr = document.createElement("tr") ;
+       
         let myTd0 = document.createElement('td') ;
         myTd0.innerHTML = f.properties.headline ;
         myTr.appendChild (myTd0);
         myTd0 = document.createElement('td') ;
-        myTd0.innerHTML = f.properties.severity ;
+        myTd0.innerHTML = String(f.properties.severity).trim(3) ;
         myTr.appendChild (myTd0);
         myTd0 = document.createElement('td') ;
         myTd0.innerHTML =  f.properties.effective ;
@@ -109,11 +119,35 @@ function loadWeatherTable (events){
         // myTr.appendChild (myTd0);
        
         myTr.appendChild (myTd0);
-        tbodyEl.appendChild(myTr);   
+       // myTr.addEventListener('click',function() {rowPopup(f, this)}) ;
+        tbodyEl.appendChild(myTr); 
+        
+         
 
     }
     tableEl.appendChild(theadEl);
     tableEl.appendChild(tbodyEl);
+    
 }
 
+$(function(){
+$("#toptable tr").click(function(){
+    alert (this.rowIndex);
+});
+}) ;
     
+
+function tableClick (event) {
+    let rowNum = event.target.closest('tr').rowIndex-1 ;
+    console.log("table clicked  : "+eventsDisplayed[rowNum].properties.headline) ;
+    alert(eventsDisplayed[rowNum].properties.headline);
+
+}
+
+function rowPopup (featureprops,myrow){
+    let f = featureprops ;
+    let mytext = myrow.parentNode.parentNode.rowIndex+" : "+f.headline+"\n"+f.description ;
+    alert(mytext);
+
+
+}
