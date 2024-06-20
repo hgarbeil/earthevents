@@ -2,7 +2,7 @@
 const poss_flood_url = 'https://www.wpc.ncep.noaa.gov/nationalfloodoutlook/possible.geojson';
 const alerts_url = 'https://api.weather.gov/alerts/active';
 let weathermarks=[] ;
-let eventsDisplayed=[];
+
 let weatherHeadings = ['Description','Severity','Start','End'];
 
 // let headers = new Headers();
@@ -77,6 +77,7 @@ function updateWeather(){
 function loadWeatherTable (events){
     console.log("creating weather table") ;
     let tableEl = document.getElementById('toptable') ;
+    clearEvents() ;
     
     tableEl.innerHTML="";
     theadEl.innerHTML="" ;
@@ -130,24 +131,13 @@ function loadWeatherTable (events){
     
 }
 
-$(function(){
-$("#toptable tr").click(function(){
-    alert (this.rowIndex);
-});
-}) ;
+
     
 
 function tableClick (event) {
     let rowNum = event.target.closest('tr').rowIndex-1 ;
-    console.log("table clicked  : "+eventsDisplayed[rowNum].properties.headline) ;
-    alert(eventsDisplayed[rowNum].properties.headline);
+    console.log("table clicked  : "+eventsDisplayed[rowNum].properties.description) ;
+    alert(eventsDisplayed[rowNum].properties.description);
 
 }
 
-function rowPopup (featureprops,myrow){
-    let f = featureprops ;
-    let mytext = myrow.parentNode.parentNode.rowIndex+" : "+f.headline+"\n"+f.description ;
-    alert(mytext);
-
-
-}

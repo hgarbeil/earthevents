@@ -26,6 +26,7 @@ let weather_show=true ;
 let latbounds=[-80,80] ;
 let lonbounds=[-180.,180];
 let quakeHeadings=['Name','Magnitude','Lat','Lon','Time','Depth'];
+let eventsDisplayed=[];
 let tableMode = 0 ;
 
 
@@ -46,6 +47,9 @@ $( document ).ready(function(){
     });
 });
 
+function clearEvents (){
+    eventsDisplayed=[] ;
+}
 // function for selecting which table to display
 function openType(evt, type) {
     // Declare all variables
