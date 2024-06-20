@@ -1,6 +1,6 @@
 <h2>Earth Events</h2>
 Website to display on a map the latest earthquakes, current volcano alert levels, NWS weather related alerts, and ongoing wildfires. Current hotspots, whether they be volcanic, wildfires, or other hot sources are loaded from the NASA FIRMS data project.  Reads geoJSON data from various sites to get recent data and uses leaflet mapping to viisualize. Note that wildfire perimeters and volcano alert levels are limited to within USA boundaries while earthquakes are extracted based on geographic coordinates that a developer could easily modify. 
-<br><br>The source for earthquake and volcano information is from the USGS and recent wildfires from the National Interagency Fire Center. Weather and weather related alerts are sourced from the US National Weather Service. Clicking on icons, points and polygons in the map should trigger an informational popup at the cursor location.
+<br><br>The source for earthquake and volcano information is from the USGS and recent wildfires from the National Interagency Fire Center. Weather and weather related alerts are sourced from the US National Weather Service. Clicking on icons, points and polygons in the map triggers an informational popup at the cursor location. Clicking on a row in the table will bring up a popup with more detailed information on the clicked item.
 
 Latest version can be demonstrated at https://hgarbeil.github.io/earthevents/.
 
