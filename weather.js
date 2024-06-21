@@ -135,8 +135,14 @@ function loadWeatherTable (events){
     
 
 function tableClick (event) {
+    let myrows = document.querySelectorAll ('tr') ;
+    for (i in myrows){
+        myrows[i].classList ="" ;
+    }
     let rowNum = event.target.closest('tr').rowIndex-1 ;
     console.log("table clicked  : "+eventsDisplayed[rowNum].properties.description) ;
+    myrows[rowNum+1].classList.add("active") ;
+    console.log(myrows[rowNum]);
     alert(eventsDisplayed[rowNum].properties.description);
 
 }

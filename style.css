@@ -157,10 +157,17 @@ body{
     color: black;
 }
 .content-table tbody tr.active:nth-of-type(even) {
-    background-color: ffaa00;
+    background-color: #ffaa00;
     color: yellow;
 }
 
+.content-table tbody tr.active:nth-of-type(even) {
+    background-color: #00ffff;
+    color: black;
+}
 
+.content-table tbody tr.active {
+    background-color: #ffaa00;
+}
 
 
