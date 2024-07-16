@@ -99,6 +99,27 @@
                   <input type="button" onclick="updateFIRMS()" value="Update FIRMS">
               </form>
               </div>
+              <div class="eventtype">
+                <h3>NWS Alerts</h3>
+                
+                <form id="weather_severe_level" class="form">
+                  <h5>Severity</h5>
+                  <div>
+                    <input type="checkbox" id="extreme_cb" name="nws_extreme" checked />
+                    <label for="extreme_cb">Extreme</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" id="severe_cb" name="nws_severe" checked />
+                    <label for="severe_cb">Severe</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" id="moderate_cb" name="moderate_cb" checked />
+                    <label for="moderate_cb">Moderate</label>
+                  </div>
+                  
+                </form>
+              </div>
+
               
 
         </div>
@@ -139,7 +160,7 @@
     </div>
     <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"></script>
     <script src="https://volcanoes.usgs.gov/hans-public/api/volcano/getMonitoredVolcanoes"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
     <script src="ajax-utils.js"></script>
     <script src="index.js"></script>
     <script src="volcano.js"></script>

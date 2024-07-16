@@ -41,6 +41,7 @@ attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreet
 
 // check which events to show
 $( document ).ready(function(){
+    console.log("inhere");
     $("#event_show_cb").on("change", "input:checkbox", function(){
         //$("#formname").submit();
         getEvents();

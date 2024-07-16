@@ -2,18 +2,22 @@
 const poss_flood_url = 'https://www.wpc.ncep.noaa.gov/nationalfloodoutlook/possible.geojson';
 const alerts_url = 'https://api.weather.gov/alerts/active';
 let weathermarks=[] ;
-
+let severVals = [] ;
+const extreme_cb = document.getElementById("extreme_cb");
+const severe_cb = document.getElementById("severe_cb") ;
+const moderate_cb = document.getElementById("moderate_cb");
 let weatherHeadings = ['Description','Severity','Start','End'];
 
-// let headers = new Headers();
 
-// headers.append('Content-Type', 'application/json');
-// headers.append('Accept', 'application/json');
+$( document ).ready(function(){
+    $("#weather_severe_level").on("change", "input:checkbox", function(){
+        //$("#formname").submit();
+        console.log("We get here") ;
+        checkSevere() ;
+        updateWeather() ;
+    });
+});
 
-// headers.append('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
-// headers.append('Access-Control-Allow-Credentials', 'true');
-
-// headers.append('GET', 'POST', 'OPTIONS');
 
 function clearWeather (){
     for (marknum in weathermarks) {
@@ -23,9 +27,25 @@ function clearWeather (){
     weathermarks=[] ;
 }
 
+function checkSevere(){
+    severVals = [] ;
+    if (extreme_cb.checked){
+        severVals.push ('Extreme');
+    }
+    if (severe_cb.checked){
+        severVals.push ('Severe');
+    }
+    if (moderate_cb.checked){
+        severVals.push ('Moderate');
+    }
+    console.log (severVals);
+
+}
 
 function updateWeather(){
     //console.log("min acreage is "+ minAcreage);
+    //checkSevere() ;
+    checkSevere() ;
     clearWeather() ;
     // $ajaxUtils.sendGetRequest (likely_flood_url, function(responseText){
     fetch (alerts_url).then(res=>res.json())
@@ -35,16 +55,18 @@ function updateWeather(){
                 w = wdata.features[i] ;
                 
                 if (w.geometry != null){
-                    if (w.properties.severity == 'Unknown' || w.properties.severity == 'Minor'){
+                    let severity = w.properties.severity ;
+                    if (!severVals.includes(severity)){
                         continue ;
                     }
+                
                     let thislength = w.properties.headline.length ;
                     let mymark = L.geoJSON(w, {
                         style: {color:"#00a"},
                         
                         onEachFeature : function (w, l){
                             l.bindPopup('<pre>'+w.properties.event+'<br>'+
-                                w.properties.headline+'<br>Severity: '+w.properties.severity+'<br>Effective: '+w.properties.effective+'<br>Expires: '+
+                                w.properties.headline+'<br>Severity: '+severity+'<br>Effective: '+w.properties.effective+'<br>Expires: '+
                                  w.properties.expires+'<br>'
                                 // "<a target='_blank' href="+w.properties.affectedZones[0]+">Website</href>"
                                 +"</pre>",
@@ -97,10 +119,12 @@ function loadWeatherTable (events){
     for (i in events.features){
 
         f = events.features[i];
-        if (f.properties.severity == 'Unknown' || f.properties.severity == 'Minor'){
-            console.log("unsevere");
+        let severity = f.properties.severity ;
+        if (!severVals.includes(severity)){
             continue ;
         }
+       
+        console.log(f.properties);
         let fsize = f.properties.headline ;
         eventsDisplayed.push (f) ;
         
